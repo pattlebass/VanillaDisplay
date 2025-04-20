@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "id": "vanilladisplay",
+  "version": "${version}",
+  "name": "Vanilla Display",
+  "description": "Displays images and videos using TextDisplay entities - no client mods required!",
+  "authors": ["Fabian S. (pattle_bass)"],
+  "contact": {
+    "website": "https://modrinth.com/project/vanilla-display",
+    "sources": "https://github.com/pattlebass/vanilladisplay"
+  },
+  "license": "MIT",
+  "icon": "assets/vanilladisplay/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "com.pattlebass.vanilladisplay.VanillaDisplay"
+    ]
+  },
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "fabric-language-kotlin": ">=${kotlin_loader_version}",
+    "fabric": "*",
+    "minecraft": "~1.21"
+  }
+}
