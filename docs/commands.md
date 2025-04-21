@@ -28,7 +28,7 @@ Displays a static image from a file.
 
 ## /vanilla_display create_source
 
-Displays frames from a dynamic source (an images that changes regularly).
+Displays frames from a dynamic source (an image that changes regularly).
 
     /vanilla_display create_source <pos> <path> [scale] [tpf] [nbt]
 
