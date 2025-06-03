@@ -11,14 +11,14 @@ It's recommended to require it on the server side. See [https://minecraft.wiki/w
 https://github.com/user-attachments/assets/2b872112-f564-4b59-84f3-458baaf357cc
 
 ## Video Sources
-You can write scripts that output a source (such as your screen or webcam) to a file and then point Vanilla Display to it. - See [commands.md](https://github.com/pattlebass/VanillaDisplay/docs/commands.md).
+You can write scripts that output a source (such as your screen or webcam) to a file and then point Vanilla Display to it. - See [commands.md](https://github.com/pattlebass/VanillaDisplay/blob/main/docs/commands.md).
 
 ![A display that shows the screen, creating a feedback loop](https://cdn.modrinth.com/data/cached_images/81414c68d2c4eb8e80b0bc742122244e5acb64cc.jpeg)
 
 
 ## How to use
 
-See [commands.md](https://github.com/pattlebass/VanillaDisplay/docs/commands.md).
+See [commands.md](https://github.com/pattlebass/VanillaDisplay/blob/main/docs/commands.md).
 
 ## Features
 
