@@ -3,7 +3,7 @@
   "id": "vanilladisplay",
   "version": "${version}",
   "name": "Vanilla Display",
-  "description": "Displays images and videos using TextDisplay entities - no client mods required!",
+  "description": "Displays images and videos using TextDisplay entities - no client-side mods required!",
   "authors": ["Fabian S. (pattle_bass)"],
   "contact": {
     "website": "https://modrinth.com/project/vanilla-display",
