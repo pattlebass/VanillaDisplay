@@ -4,6 +4,7 @@ import com.pattlebass.vanilladisplay.VanillaDisplay
 import net.minecraft.entity.EntityType
 import net.minecraft.entity.decoration.DisplayEntity
 import net.minecraft.text.Style
+import net.minecraft.text.StyleSpriteSource
 import net.minecraft.text.Text
 import net.minecraft.util.Identifier
 import net.minecraft.util.math.AffineTransformation
@@ -58,7 +59,8 @@ abstract class AbstractImageDisplayEntity(
     }
 
     protected fun getImageText(image: BufferedImage) : Text {
-        val text = Text.empty().setStyle(Style.EMPTY.withFont(Identifier.of(VanillaDisplay.MOD_ID, "default")))
+        val font = StyleSpriteSource.Font(Identifier.of(VanillaDisplay.MOD_ID, "default"))
+        val text = Text.empty().setStyle(Style.EMPTY.withFont(font))
         for (y in 0..<MathHelper.clamp(image.height, 0, MAX_SCREEN_HEIGHT)) {
             for (x in 0..<MathHelper.clamp(image.width, 0, MAX_SCREEN_WIDTH)) {
                 text.append(Text.literal("█\u200c").setStyle(Style.EMPTY.withColor(image.getRGB(x, y))))

@@ -31,8 +31,8 @@ class VideoDisplayEntity(
 
     override fun tick() {
         super.tick()
-        if (!world.isClient) {
-            if (tickCounter.mod(tpf) == 0 && textFrames.size != 0) {
+        if (!entityWorld.isClient) {
+            if (tickCounter.mod(tpf) == 0 && textFrames.isNotEmpty()) {
                 frame = (frame + 1).mod(textFrames.size)
                 text = textFrames[frame]
             }

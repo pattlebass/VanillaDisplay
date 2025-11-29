@@ -9,13 +9,14 @@ import com.mojang.brigadier.context.CommandContext
 import com.pattlebass.vanilladisplay.entity.ImageDisplayEntity
 import com.pattlebass.vanilladisplay.entity.SourceDisplayEntity
 import com.pattlebass.vanilladisplay.entity.VideoDisplayEntity
-import net.minecraft.command.argument.NbtCompoundArgumentType
 import net.minecraft.command.argument.Vec3ArgumentType
+import net.minecraft.entity.Entity
 import net.minecraft.entity.EntityType
-import net.minecraft.nbt.NbtCompound
 import net.minecraft.server.command.CommandManager
 import net.minecraft.server.command.ServerCommandSource
-import net.minecraft.util.math.BlockPos
+import net.minecraft.text.ClickEvent
+import net.minecraft.text.Style
+import net.minecraft.text.Text
 import net.minecraft.util.math.Vec3d
 
 object ModCommand {
@@ -38,7 +39,7 @@ object ModCommand {
                             val path = StringArgumentType.getString(context, "folder_path")
                             val frames = IntegerArgumentType.getInteger(context, "frames")
 
-                            summonVideoDisplayEntity(context, pos, path, frames, 0.1f, 2, NbtCompound())
+                            summonVideoDisplayEntity(context, pos, path, frames, 0.1f, 2)
                         }
                         .then(CommandManager.argument("scale", FloatArgumentType.floatArg())
                             .executes { context ->
@@ -47,7 +48,7 @@ object ModCommand {
                                 val frames = IntegerArgumentType.getInteger(context, "frames")
                                 val scale = FloatArgumentType.getFloat(context, "scale")
 
-                                summonVideoDisplayEntity(context, pos, path, frames, scale, 2, NbtCompound())
+                                summonVideoDisplayEntity(context, pos, path, frames, scale, 2)
                             }
                             .then(CommandManager.argument("tpf", IntegerArgumentType.integer())
                                 .executes { context ->
@@ -57,20 +58,8 @@ object ModCommand {
                                     val scale = FloatArgumentType.getFloat(context, "scale")
                                     val tpf = IntegerArgumentType.getInteger(context, "tpf")
 
-                                    summonVideoDisplayEntity(context, pos, path, frames, scale, tpf, NbtCompound())
+                                    summonVideoDisplayEntity(context, pos, path, frames, scale, tpf)
                                 }
-                                .then(CommandManager.argument("nbt", NbtCompoundArgumentType.nbtCompound())
-                                    .executes { context ->
-                                        val pos = Vec3ArgumentType.getVec3(context, "pos")
-                                        val path = StringArgumentType.getString(context, "folder_path")
-                                        val frames = IntegerArgumentType.getInteger(context, "frames")
-                                        val scale = FloatArgumentType.getFloat(context, "scale")
-                                        val tpf = IntegerArgumentType.getInteger(context, "tpf")
-                                        val nbt = NbtCompoundArgumentType.getNbtCompound(context, "nbt")
-
-                                        summonVideoDisplayEntity(context, pos, path, frames, scale, tpf, nbt)
-                                    }
-                                )
                             )
                         )
                     )
@@ -86,7 +75,7 @@ object ModCommand {
                         val pos = Vec3ArgumentType.getVec3(context, "pos")
                         val path = StringArgumentType.getString(context, "path")
 
-                        summonImageDisplayEntity(context, pos, path, 0.1f, NbtCompound())
+                        summonImageDisplayEntity(context, pos, path, 0.1f)
                     }
                     .then(CommandManager.argument("scale", FloatArgumentType.floatArg())
                         .executes { context ->
@@ -94,20 +83,9 @@ object ModCommand {
                             val path = StringArgumentType.getString(context, "path")
                             val scale = FloatArgumentType.getFloat(context, "scale")
 
-                            summonImageDisplayEntity(context, pos, path, scale, NbtCompound())
+                            summonImageDisplayEntity(context, pos, path, scale)
                         }
-                        .then(CommandManager.argument("nbt", NbtCompoundArgumentType.nbtCompound())
-                            .executes { context ->
-                                val pos = Vec3ArgumentType.getVec3(context, "pos")
-                                val path = StringArgumentType.getString(context, "path")
-                                val scale = FloatArgumentType.getFloat(context, "scale")
-                                val nbt = NbtCompoundArgumentType.getNbtCompound(context, "nbt")
-
-                                summonImageDisplayEntity(context, pos, path, scale, nbt)
-                            }
-                        )
                     )
-
                 )
             )
     }
@@ -120,7 +98,7 @@ object ModCommand {
                         val pos = Vec3ArgumentType.getVec3(context, "pos")
                         val path = StringArgumentType.getString(context, "path")
 
-                        summonSourceDisplayEntity(context, pos, path, 0.1f, 2, NbtCompound())
+                        summonSourceDisplayEntity(context, pos, path, 0.1f, 2)
                     }
                     .then(CommandManager.argument("scale", FloatArgumentType.floatArg())
                         .executes { context ->
@@ -128,7 +106,7 @@ object ModCommand {
                             val path = StringArgumentType.getString(context, "path")
                             val scale = FloatArgumentType.getFloat(context, "scale")
 
-                            summonSourceDisplayEntity(context, pos, path, scale, 2, NbtCompound())
+                            summonSourceDisplayEntity(context, pos, path, scale, 2)
                         }
                         .then(CommandManager.argument("tpf", IntegerArgumentType.integer())
                             .executes { context ->
@@ -137,19 +115,8 @@ object ModCommand {
                                 val scale = FloatArgumentType.getFloat(context, "scale")
                                 val tpf = IntegerArgumentType.getInteger(context, "tpf")
 
-                                summonSourceDisplayEntity(context, pos, path, scale, tpf, NbtCompound())
+                                summonSourceDisplayEntity(context, pos, path, scale, tpf)
                             }
-                            .then(CommandManager.argument("nbt", NbtCompoundArgumentType.nbtCompound())
-                                .executes { context ->
-                                    val pos = Vec3ArgumentType.getVec3(context, "pos")
-                                    val path = StringArgumentType.getString(context, "path")
-                                    val scale = FloatArgumentType.getFloat(context, "scale")
-                                    val tpf = IntegerArgumentType.getInteger(context, "tpf")
-                                    val nbt = NbtCompoundArgumentType.getNbtCompound(context, "nbt")
-
-                                    summonSourceDisplayEntity(context, pos, path, scale, tpf, nbt)
-                                }
-                            )
                         )
                     )
                 )
@@ -162,19 +129,15 @@ object ModCommand {
         path: String,
         frames: Int,
         scale: Float,
-        tpf: Int,
-        nbt: NbtCompound
+        tpf: Int
     ): Int {
         val world = context.source.world
 
         val entity = VideoDisplayEntity(EntityType.TEXT_DISPLAY, world, scale, tpf, path, frames)
         entity.updatePosition(pos.x, pos.y, pos.z)
 
-        val entityNbt = entity.writeNbt(NbtCompound())
-        entityNbt.copyFrom(nbt)
-        entity.readNbt(entityNbt)
-
         world.spawnEntity(entity)
+        sendUUID(context, entity)
 
         return 1
     }
@@ -183,19 +146,15 @@ object ModCommand {
         context: CommandContext<ServerCommandSource>,
         pos: Vec3d,
         path: String,
-        scale: Float,
-        nbt: NbtCompound
+        scale: Float
     ): Int {
         val world = context.source.world
 
         val entity = ImageDisplayEntity(EntityType.TEXT_DISPLAY, world, scale, path)
         entity.updatePosition(pos.x, pos.y, pos.z)
 
-        val entityNbt = entity.writeNbt(NbtCompound())
-        entityNbt.copyFrom(nbt)
-        entity.readNbt(entityNbt)
-
         world.spawnEntity(entity)
+        sendUUID(context, entity)
 
         return 1
     }
@@ -205,20 +164,29 @@ object ModCommand {
         pos: Vec3d,
         path: String,
         scale: Float,
-        tpf: Int,
-        nbt: NbtCompound
+        tpf: Int
     ): Int {
         val world = context.source.world
 
         val entity = SourceDisplayEntity(EntityType.TEXT_DISPLAY, world, scale, tpf, path)
         entity.updatePosition(pos.x, pos.y, pos.z)
 
-        val entityNbt = entity.writeNbt(NbtCompound())
-        entityNbt.copyFrom(nbt)
-        entity.readNbt(entityNbt)
-
         world.spawnEntity(entity)
+        sendUUID(context, entity)
 
         return 1
     }
+
+    private fun sendUUID(context: CommandContext<ServerCommandSource>, entity: Entity) {
+        val uuid = entity.uuidAsString
+        val msg = Text.literal("Created display entity with UUID: ")
+            .append(
+                Text.literal(uuid)
+                    .styled { style: Style ->
+                        style.withClickEvent(ClickEvent.CopyToClipboard(uuid)).withUnderline(true)
+                    }
+            )
+        context.getSource().sendMessage(msg)
+    }
+
 }

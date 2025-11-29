@@ -15,7 +15,7 @@ class SourceDisplayEntity(
 
     override fun tick() {
         super.tick()
-        if (!world.isClient) {
+        if (!entityWorld.isClient) {
             if (tickCounter.mod(tpf) == 0) {
                 val frame = loadImage(path)
                 if (frame != null) {

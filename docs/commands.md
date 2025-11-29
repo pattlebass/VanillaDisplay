@@ -1,15 +1,22 @@
+## Modifying NBT data
+
+After creating a Display entity with the commands below, copy the returned UUID and run this command:
+
+    /data merge entity <UUID> <NBT>
+
+---
+
 ## /vanilla_display create_video
 
 Displays a video by showing frames from a folder. The image names must have the following format `n.jpg`, where `n` is a number from `1` to `frames`.
 
-    /vanilla_display create_video <pos> <folder_path> <frames> [scale] [tpf] [nbt]
+    /vanilla_display create_video <pos> <folder_path> <frames> [scale] [tpf]
 
 - pos: world coordinates (e.g. ~ ~ ~)
 - folder_path: folder containing frame images (**MUST END IN /**)
 - frames: total number of frames
 - scale: optional float (default: 0.1)
 - tpf: ticks per frame (default: 2)
-- nbt: optional NBT data for the entity
 
 ---
 
@@ -17,12 +24,11 @@ Displays a video by showing frames from a folder. The image names must have the 
 
 Displays a static image from a file.
 
-    /vanilla_display create_image <pos> <path> [scale] [nbt]
+    /vanilla_display create_image <pos> <path> [scale]
 
 - pos: world coordinates
 - path: image file path
 - scale: optional float (default: 0.1)
-- nbt: optional NBT data
 
 ---
 
@@ -30,13 +36,12 @@ Displays a static image from a file.
 
 Displays frames from a dynamic source (an image that changes regularly).
 
-    /vanilla_display create_source <pos> <path> [scale] [tpf] [nbt]
+    /vanilla_display create_source <pos> <path> [scale] [tpf]
 
 - pos: world coordinates
 - path: path to the frame source
 - scale: optional float (default: 0.1)
 - tpf: ticks per frame (default: 2)
-- nbt: optional NBT data
 
 ### Screen recording example
 

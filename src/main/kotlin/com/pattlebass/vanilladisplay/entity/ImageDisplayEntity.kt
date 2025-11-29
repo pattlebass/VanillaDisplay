@@ -7,7 +7,7 @@ class ImageDisplayEntity (
     type: EntityType<out TextDisplayEntity>,
     world: World,
     scale: Float,
-    private var path: String,
+    path: String,
 ) : AbstractImageDisplayEntity(type, world, scale)
 {
     init {
